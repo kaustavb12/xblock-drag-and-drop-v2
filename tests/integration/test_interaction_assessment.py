@@ -209,8 +209,6 @@ class AssessmentInteractionTest(
             self.assert_placed_item(item.item_id, zone_titles, assessment_mode=False)
             # self.assert_placed_item(item.item_id, ['a'], assessment_mode=False)
 
-        self.assert_placed_item(3, [MIDDLE_ZONE_ID], assessment_mode=False)
-
         for item_definition in self._get_items_without_zone(self.items_map).values():
             self.assertNotDraggable(item_definition.item_id)
             item = self._get_item_by_value(item_definition.item_id)
@@ -237,9 +235,6 @@ class AssessmentInteractionTest(
 
         self.place_item(0, TOP_ZONE_ID, Keys.RETURN)
 
-        # Place an item with multiple correct zones
-        self.place_item(3, TOP_ZONE_ID, Keys.RETURN)
-
         for _ in range(self.MAX_ATTEMPTS-1):
             self.assertEqual(show_answer_button.get_attribute('disabled'), 'true')
             self.click_submit()
@@ -260,6 +255,26 @@ class AssessmentInteractionTest(
 
         self.assertEqual(show_answer_button.get_attribute('disabled'), 'true')
         self._assert_show_answer_item_placement()
+
+    @data(MIDDLE_ZONE_ID, TOP_ZONE_ID)
+    def test_show_answer_user_selected_zone(self, dropped_zone_id):
+        zones = dict(self.all_zones)
+
+        # Place an item with multiple correct zones
+        self.place_item(3, dropped_zone_id, Keys.RETURN)
+
+        for _ in range(self.MAX_ATTEMPTS):
+            self.click_submit()
+
+        # A feedback popup should open upon final submission.
+        popup = self._get_popup()
+        self.assertTrue(popup.is_displayed())
+
+        self.click_show_answer()
+        self._assert_show_answer_item_placement()
+
+        self.assert_placed_item(3, [zones[MIDDLE_ZONE_ID]], assessment_mode=False)
+
 
     def test_do_attempt_feedback_is_updated(self):
         """
