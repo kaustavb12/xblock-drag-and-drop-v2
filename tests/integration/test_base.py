@@ -444,6 +444,12 @@ class InteractionTestBase(object):
         item_content = item.find_element_by_css_selector('.item-content')
         self.wait_until_visible(item_content)
         item_description = item.find_element_by_css_selector('.sr.description')
+        print("!!!!!!!!!!!!!!!!!!!!!!!!")
+        print("!!!!!!!!!!!!!!!!!!!!!!!!")
+        print(item_value)
+        print(item_description)
+        print("!!!!!!!!!!!!!!!!!!!!!!!!")
+        print("!!!!!!!!!!!!!!!!!!!!!!!!")
         self.wait_until_visible(item_description)
         item_description_id = '-item-{}-description'.format(item_value)
 

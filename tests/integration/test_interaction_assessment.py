@@ -195,7 +195,7 @@ class AssessmentInteractionTest(
         self.assertEqual(reset_button.get_attribute('disabled'), 'true')
 
     def _assert_show_answer_item_placement(self):
-        # zones = dict(self.all_zones)
+        zones = dict(self.all_zones)
         print("#######################")
         print("#######################")
         print(self)
@@ -203,10 +203,12 @@ class AssessmentInteractionTest(
         print("#######################")
         print("#######################")
         for item in self._get_items_with_zone(self.items_map).values():
-            # zone_titles = [zones[zone_id] for zone_id in item.zone_ids]
+            zone_titles = [zones[zone_id] for zone_id in item.zone_ids]
             # When showing answers, correct items are placed as if assessment_mode=False
-            # self.assert_placed_item(item.item_id, zone_titles, assessment_mode=False)
-            self.assert_placed_item(item.item_id, ['a'], assessment_mode=False)
+            self.assert_placed_item(item.item_id, zone_titles, assessment_mode=False)
+            # self.assert_placed_item(item.item_id, ['a'], assessment_mode=False)
+
+        self.assert_placed_item(3, [MIDDLE_ZONE_ID], assessment_mode=False)
 
         for item_definition in self._get_items_without_zone(self.items_map).values():
             self.assertNotDraggable(item_definition.item_id)
@@ -233,6 +235,10 @@ class AssessmentInteractionTest(
         self.assertTrue(show_answer_button.is_displayed())
 
         self.place_item(0, TOP_ZONE_ID, Keys.RETURN)
+
+        #Place an item with multiple correct zones
+        self.place_item(3, MIDDLE_ZONE_ID, Keys.RETURN)
+
         for _ in range(self.MAX_ATTEMPTS-1):
             self.assertEqual(show_answer_button.get_attribute('disabled'), 'true')
             self.click_submit()
