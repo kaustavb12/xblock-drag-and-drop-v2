@@ -204,6 +204,7 @@ class AssessmentInteractionTest(
         print("#######################")
         for item in self._get_items_with_zone(self.items_map).values():
             zone_titles = [zones[zone_id] for zone_id in item.zone_ids]
+            print(zone_titles)
             # When showing answers, correct items are placed as if assessment_mode=False
             self.assert_placed_item(item.item_id, zone_titles, assessment_mode=False)
             # self.assert_placed_item(item.item_id, ['a'], assessment_mode=False)
