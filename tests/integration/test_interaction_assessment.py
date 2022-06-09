@@ -195,7 +195,7 @@ class AssessmentInteractionTest(
         self.assertEqual(reset_button.get_attribute('disabled'), 'true')
 
     def _assert_show_answer_item_placement(self):
-        zones = dict(self.all_zones)
+        # zones = dict(self.all_zones)
         print("#######################")
         print("#######################")
         print(self)
