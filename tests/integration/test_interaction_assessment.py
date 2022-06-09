@@ -237,7 +237,7 @@ class AssessmentInteractionTest(
         self.place_item(0, TOP_ZONE_ID, Keys.RETURN)
 
         # Place an item with multiple correct zones
-        self.place_item(3, MIDDLE_ZONE_ID, Keys.RETURN)
+        self.place_item(3, TOP_ZONE_ID, Keys.RETURN)
 
         for _ in range(self.MAX_ATTEMPTS-1):
             self.assertEqual(show_answer_button.get_attribute('disabled'), 'true')
