@@ -62,4 +62,4 @@ jobs:
         pylint tests --rcfile=tests/pylintrc
 
     - name: Run unit tests
-      run: xvfb-run python run_tests.py tests/integration/test_sizing.py -k 'test_wide_image_mobile'
+      run: xvfb-run python run_tests.py tests/integration/test_sizing.py
