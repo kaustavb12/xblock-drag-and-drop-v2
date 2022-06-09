@@ -260,6 +260,12 @@ class AssessmentInteractionTest(
     def test_show_answer_user_selected_zone(self, dropped_zone_id):
         zones = dict(self.all_zones)
 
+        print("#######################")
+        print("#######################")
+        print(dropped_zone_id)
+        print("#######################")
+        print("#######################")
+
         # Place an item with multiple correct zones
         self.place_item(3, dropped_zone_id, Keys.RETURN)
 
@@ -274,7 +280,6 @@ class AssessmentInteractionTest(
         self._assert_show_answer_item_placement()
 
         self.assert_placed_item(3, [zones[MIDDLE_ZONE_ID]], assessment_mode=False)
-
 
     def test_do_attempt_feedback_is_updated(self):
         """
