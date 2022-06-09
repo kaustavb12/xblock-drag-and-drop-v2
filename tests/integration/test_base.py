@@ -444,12 +444,6 @@ class InteractionTestBase(object):
         item_content = item.find_element_by_css_selector('.item-content')
         self.wait_until_visible(item_content)
         item_description = item.find_element_by_css_selector('.sr.description')
-        print("!!!!!!!!!!!!!!!!!!!!!!!!")
-        print("!!!!!!!!!!!!!!!!!!!!!!!!")
-        print(item_value)
-        print(item_description)
-        print("!!!!!!!!!!!!!!!!!!!!!!!!")
-        print("!!!!!!!!!!!!!!!!!!!!!!!!")
         self.wait_until_visible(item_description)
         item_description_id = '-item-{}-description'.format(item_value)
 
@@ -466,6 +460,13 @@ class InteractionTestBase(object):
             self.assertEqual(item.get_attribute('class'), 'option fade')
             self.assertIsNone(item.get_attribute('tabindex'))
             description = 'Correctly placed in: {}'
+
+        print("!!!!!!!!!!!!!!!!!!!!!!!!")
+        print("!!!!!!!!!!!!!!!!!!!!!!!!")
+        print(item_value)
+        print(item_description.text)
+        print("!!!!!!!!!!!!!!!!!!!!!!!!")
+        print("!!!!!!!!!!!!!!!!!!!!!!!!")
 
         # An item with multiple drop zones could be located in any one of these
         # zones. In that case, zone_title will be a list, and we need to check
