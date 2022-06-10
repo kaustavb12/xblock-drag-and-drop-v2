@@ -266,19 +266,18 @@ class AssessmentInteractionTest(
         print("#######################")
         print("#######################")
 
+        show_answer_button = self._get_show_answer_button()
+        self.assertTrue(show_answer_button.is_displayed())
+
         # Place an item with multiple correct zones
         self.place_item(3, dropped_zone_id, Keys.RETURN)
 
         for _ in range(self.MAX_ATTEMPTS):
             self.click_submit()
 
-        # A feedback popup should open upon final submission.
-        popup = self._get_popup()
-        self.assertTrue(popup.is_displayed())
-
+        self.assertIsNone(show_answer_button.get_attribute('disabled'))
         self.click_show_answer()
-        self._assert_show_answer_item_placement()
-
+        
         self.assert_placed_item(3, [zones[MIDDLE_ZONE_ID]], assessment_mode=False)
 
     def test_do_attempt_feedback_is_updated(self):
