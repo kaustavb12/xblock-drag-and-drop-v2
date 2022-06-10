@@ -986,6 +986,23 @@ class DragAndDropBlock(
         zone_count = {}
         correct_items = []
 
+        def _get_display_zone(zone_count, zones):
+            """
+            Returns the zone to display the item among the given zones.
+            """
+            display_zone = None
+            for zone in zones:
+                # Check if no item is present in zone
+                if zone not in zone_count:
+                    zone_count[zone] = 1
+                    return zone
+                # Check if the current zone has the least number of items till now
+                elif not display_zone or zone_count[display_zone] > zone_count[zone]:
+                    display_zone = zone
+
+            zone_count[display_zone] += 1
+            return display_zone
+
         # Set states of all items dropped in correct zones
         for item_id in self.item_state:
             if self.item_state[item_id]['correct']:
@@ -1012,35 +1029,13 @@ class DragAndDropBlock(
                         zones.append(zone)
 
                 if zones:
-                    zone = self._get_display_zone(zone_count, zones)
+                    zone = _get_display_zone(zone_count, zones)
                     state[item_id] = {
                         'zone': zone,
                         'correct': True,
                     }
 
         return {'items': state}
-
-    def _get_display_zone(self, zone_count, zones):
-        """
-        Returns the zone to display the item among the given zones.
-
-        If any zone has no items, then returns that zone
-        If all zones have items, then returns the zone with the least number of items.
-        """
-        display_zone = None
-        min_count = 0
-        for zone in zones:
-            # Check if no item is present in zone
-            if zone not in zone_count:
-                zone_count[zone] = 1
-                return zone
-            # Check if the current zone has the least number of items till now
-            elif not display_zone or min_count > zone_count[zone]:
-                display_zone = zone
-                min_count = zone_count[zone]
-
-        zone_count[display_zone] += 1
-        return display_zone
 
     def _get_item_state(self):
         """
