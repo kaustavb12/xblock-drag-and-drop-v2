@@ -196,18 +196,10 @@ class AssessmentInteractionTest(
 
     def _assert_show_answer_item_placement(self):
         zones = dict(self.all_zones)
-        print("#######################")
-        print("#######################")
-        print(self)
-        print(self.items_map)
-        print("#######################")
-        print("#######################")
         for item in self._get_items_with_zone(self.items_map).values():
             zone_titles = [zones[zone_id] for zone_id in item.zone_ids]
-            print(zone_titles)
             # When showing answers, correct items are placed as if assessment_mode=False
             self.assert_placed_item(item.item_id, zone_titles, assessment_mode=False)
-            # self.assert_placed_item(item.item_id, ['a'], assessment_mode=False)
 
         for item_definition in self._get_items_without_zone(self.items_map).values():
             self.assertNotDraggable(item_definition.item_id)
@@ -234,7 +226,6 @@ class AssessmentInteractionTest(
         self.assertTrue(show_answer_button.is_displayed())
 
         self.place_item(0, TOP_ZONE_ID, Keys.RETURN)
-
         for _ in range(self.MAX_ATTEMPTS-1):
             self.assertEqual(show_answer_button.get_attribute('disabled'), 'true')
             self.click_submit()
@@ -258,13 +249,10 @@ class AssessmentInteractionTest(
 
     @data(MIDDLE_ZONE_ID, TOP_ZONE_ID)
     def test_show_answer_user_selected_zone(self, dropped_zone_id):
+        """
+        Test item stays in plane when showing answer if placed in correct zone.
+        """
         zones = dict(self.all_zones)
-
-        print("#######################")
-        print("#######################")
-        print(dropped_zone_id)
-        print("#######################")
-        print("#######################")
 
         show_answer_button = self._get_show_answer_button()
         self.assertTrue(show_answer_button.is_displayed())
@@ -272,6 +260,7 @@ class AssessmentInteractionTest(
         # Place an item with multiple correct zones
         self.place_item(3, dropped_zone_id, Keys.RETURN)
 
+        # Submit maximum number of times
         for _ in range(self.MAX_ATTEMPTS):
             self.click_submit()
 
