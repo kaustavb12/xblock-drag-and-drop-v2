@@ -278,7 +278,7 @@ class AssessmentInteractionTest(
         self.assertIsNone(show_answer_button.get_attribute('disabled'))
         self.click_show_answer()
 
-        self.assert_placed_item(3, [zones[MIDDLE_ZONE_ID]], assessment_mode=False)
+        self.assert_placed_item(3, [zones[dropped_zone_id]], assessment_mode=False)
 
     def test_do_attempt_feedback_is_updated(self):
         """
