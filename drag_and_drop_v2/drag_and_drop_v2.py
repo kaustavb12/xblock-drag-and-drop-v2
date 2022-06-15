@@ -5,6 +5,7 @@
 # Imports ###########################################################
 
 from __future__ import absolute_import
+from collections import Counter
 
 import copy
 import json
@@ -983,37 +984,30 @@ class DragAndDropBlock(
         state = {}
         items = copy.deepcopy(self.data.get('items', []))
 
-        zone_count = {}
-        correct_items = []
+        zone_count = Counter()
+        correct_items = set()
 
-        def _get_display_zone(zone_count, zones):
+        def _get_preferred_zone(zone_count, zones):
             """
-            Returns the zone to display the item among the given zones.
+            Returns the zone with the least number of items.
             """
-            display_zone = None
+            preferred_zone = None
             for zone in zones:
-                # Check if no item is present in zone
-                if zone not in zone_count:
-                    zone_count[zone] = 1
-                    return zone
                 # Check if the current zone has the least number of items till now
-                elif not display_zone or zone_count[display_zone] > zone_count[zone]:
-                    display_zone = zone
+                if not preferred_zone or zone_count[preferred_zone] > zone_count[zone]:
+                    preferred_zone = zone
 
-            zone_count[display_zone] += 1
-            return display_zone
+            zone_count[preferred_zone] += 1
+            return preferred_zone
 
         # Set states of all items dropped in correct zones
         for item_id in self.item_state:
             if self.item_state[item_id]['correct']:
                 state[item_id] = self.item_state[item_id]
-                correct_items.append(item_id)
+                correct_items.add(item_id)
 
                 zone = self.item_state[item_id]['zone']
-                if zone not in zone_count:
-                    zone_count[zone] = 1
-                else:
-                    zone_count[zone] += 1
+                zone_count[zone] += 1
 
         # Set states of rest of the items
         for item in items:
@@ -1029,7 +1023,7 @@ class DragAndDropBlock(
                         zones.append(zone)
 
                 if zones:
-                    zone = _get_display_zone(zone_count, zones)
+                    zone = _get_preferred_zone(zone_count, zones)
                     state[item_id] = {
                         'zone': zone,
                         'correct': True,
