@@ -461,6 +461,13 @@ class InteractionTestBase(object):
             self.assertIsNone(item.get_attribute('tabindex'))
             description = 'Correctly placed in: {}'
 
+        print("!!!!!!!!!!!!!!!!!!!!!!!")
+        print("!!!!!!!!!!!!!!!!!!!!!!!!")
+        print(item_value)
+        print(item_description.text)
+        print("!!!!!!!!!!!!!!!!!!!!!!!!")
+        print("!!!!!!!!!!!!!!!!!!!!!!!!")
+
         # An item with multiple drop zones could be located in any one of these
         # zones. In that case, zone_title will be a list, and we need to check
         # whether the zone info in the description of the item matches any of
