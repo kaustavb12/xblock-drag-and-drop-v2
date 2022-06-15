@@ -461,7 +461,7 @@ class InteractionTestBase(object):
             self.assertIsNone(item.get_attribute('tabindex'))
             description = 'Correctly placed in: {}'
 
-        print("!!!!!!!!!!!!!!!!!!!!!!!!")
+        print("!!!!!!!!!!!!!!!!!!!!!!!")
         print("!!!!!!!!!!!!!!!!!!!!!!!!")
         print(item_value)
         print(item_description.text)
